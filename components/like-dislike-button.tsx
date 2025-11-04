@@ -74,35 +74,31 @@ export function LikeDislikeButton({
   };
 
   return (
-    <div className={`flex items-center ${compact ? "gap-2" : "gap-4 mt-4"}`}>
+    <div className="flex items-center gap-2">
       <button
         onClick={handleLike}
-        className={`flex items-center gap-1 ${
-          compact ? "px-2 py-1" : "px-4 py-2"
-        } rounded-lg transition-all ${
+        className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
           userAction === "like"
             ? "btn-skeu text-primary"
             : "hover:bg-surface text-muted"
         }`}
         aria-label="좋아요"
       >
-        <ThumbsUp className={compact ? "w-4 h-4" : "w-5 h-5"} />
-        <span className={`font-semibold ${compact ? "text-sm" : ""}`}>{likes}</span>
+        <ThumbsUp className="w-4 h-4" />
+        <span className="text-sm font-semibold">{likes}</span>
       </button>
 
       <button
         onClick={handleDislike}
-        className={`flex items-center gap-1 ${
-          compact ? "px-2 py-1" : "px-4 py-2"
-        } rounded-lg transition-all ${
+        className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-all ${
           userAction === "dislike"
             ? "btn-skeu text-error"
             : "hover:bg-surface text-muted"
         }`}
         aria-label="싫어요"
       >
-        <ThumbsDown className={compact ? "w-4 h-4" : "w-5 h-5"} />
-        <span className={`font-semibold ${compact ? "text-sm" : ""}`}>{dislikes}</span>
+        <ThumbsDown className="w-4 h-4" />
+        <span className="text-sm font-semibold">{dislikes}</span>
       </button>
     </div>
   );

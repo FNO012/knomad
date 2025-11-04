@@ -1,5 +1,5 @@
 import { City } from "@/lib/types";
-import { Cloud, MapPin, Wind, Wallet, Leaf, Building2, Coffee, Users, Sun, Wind as WindIcon, Snowflake } from "lucide-react";
+import { MapPin, Leaf, Building2, Coffee, Users, Sun, Wind as WindIcon, Snowflake } from "lucide-react";
 import { LikeDislikeButton } from "./like-dislike-button";
 
 interface CityCardProps {
@@ -52,21 +52,21 @@ export function CityCard({ city }: CityCardProps) {
 
       {/* Card Content */}
       <div className="p-5 space-y-4">
-        {/* City Name and Like/Dislike Buttons */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="text-xl font-bold text-foreground flex-1">{city.name}</h3>
+        {/* City Name, Region, and Like/Dislike Buttons */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 text-muted text-sm mb-1">
+              <MapPin className="w-4 h-4" />
+              <span>{city.region}</span>
+            </div>
+            <h3 className="text-xl font-bold text-foreground">{city.name}</h3>
+          </div>
+          <div className="flex-shrink-0">
             <LikeDislikeButton
               cityId={city.id}
               initialLikes={city.likes}
               initialDislikes={city.dislikes}
-              compact
             />
-          </div>
-          {/* Region */}
-          <div className="flex items-center gap-2 text-muted text-sm">
-            <MapPin className="w-4 h-4" />
-            <span>{city.region}</span>
           </div>
         </div>
 
@@ -74,7 +74,7 @@ export function CityCard({ city }: CityCardProps) {
         <div className="space-y-3 pt-2 border-t border-border">
           {/* Budget */}
           <div className="flex items-center gap-2">
-            <Wallet className="w-4 h-4 text-muted" />
+            <span className="text-muted">💰</span>
             <span className="text-sm text-muted">예산:</span>
             <span className="text-sm font-semibold text-foreground">{city.budget}</span>
           </div>
@@ -106,42 +106,6 @@ export function CityCard({ city }: CityCardProps) {
             <span className="text-sm text-muted">최고계절:</span>
             <span className="text-sm font-semibold text-foreground">{city.bestSeason}</span>
           </div>
-        </div>
-
-        {/* Monthly Cost */}
-        <div className="pt-2 space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted">💵 월 평균 생활비</span>
-            <span className="text-lg font-bold text-primary">
-              {(city.monthlyCost / 10000).toFixed(0)}만원
-            </span>
-          </div>
-        </div>
-
-        {/* Weather and Air Quality */}
-        <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1 text-muted">
-            <Cloud className="w-4 h-4" />
-            <span>{city.currentTemp}°C</span>
-            <span>{city.currentWeather}</span>
-          </div>
-          <div className="flex items-center gap-1 text-muted">
-            <Wind className="w-4 h-4" />
-            <span>AQI: {city.currentAQI}</span>
-            <span className="text-success">(좋음)</span>
-          </div>
-        </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {city.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="tag-skeu text-xs"
-            >
-              #{tag}
-            </span>
-          ))}
         </div>
       </div>
     </div>
