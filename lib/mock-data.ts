@@ -1,4 +1,4 @@
-import { City } from "./types";
+import { City, Review } from "./types";
 
 // Mock Cities Data
 export const mockCities: City[] = [

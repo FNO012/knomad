@@ -39,3 +39,17 @@ export interface City {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Review (리뷰)
+export interface Review {
+  id: string;
+  cityId: string;
+  userId: string;
+  userName: string;
+  cityName: string;
+  rating: number;
+  content: string;
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
