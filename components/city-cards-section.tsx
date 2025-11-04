@@ -9,7 +9,7 @@ interface CityCardsSectionProps {
 
 export function CityCardsSection({
   cities,
-  title = "인기 도시",
+  title = "도시 리스트",
   subtitle,
 }: CityCardsSectionProps) {
   return (
@@ -30,13 +30,6 @@ export function CityCardsSection({
           {cities.map((city) => (
             <CityCard key={city.id} city={city} />
           ))}
-        </div>
-
-        {/* Load More Button */}
-        <div className="mt-12 text-center">
-          <button className="input-skeu px-8 py-3 rounded-lg text-foreground font-semibold hover:shadow-lg transition-all">
-            더 많은 도시 보기 →
-          </button>
         </div>
       </div>
     </section>

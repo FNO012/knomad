@@ -1,26 +1,44 @@
 import { City } from "@/lib/types";
-import { Cloud, MapPin, Star, Wind } from "lucide-react";
-import Link from "next/link";
+import { Cloud, MapPin, Wind, Wallet, Leaf, Building2, Coffee, Users, Sun, Wind as WindIcon, Snowflake } from "lucide-react";
+import { LikeDislikeButton } from "./like-dislike-button";
 
 interface CityCardProps {
   city: City;
 }
 
+// Helper function to get environment icon
+function getEnvironmentIcon(env: string) {
+  switch (env) {
+    case "자연친화":
+      return <Leaf className="w-4 h-4" />;
+    case "도시선호":
+      return <Building2 className="w-4 h-4" />;
+    case "카페작업":
+      return <Coffee className="w-4 h-4" />;
+    case "코워킹 필수":
+      return <Users className="w-4 h-4" />;
+    default:
+      return null;
+  }
+}
+
+// Helper function to get season icon
+function getSeasonIcon(season: string) {
+  switch (season) {
+    case "봄":
+      return <Sun className="w-4 h-4" />;
+    case "여름":
+      return <Sun className="w-4 h-4 text-yellow-500" />;
+    case "가을":
+      return <WindIcon className="w-4 h-4 text-orange-500" />;
+    case "겨울":
+      return <Snowflake className="w-4 h-4 text-blue-500" />;
+    default:
+      return <Sun className="w-4 h-4" />;
+  }
+}
+
 export function CityCard({ city }: CityCardProps) {
-  // Calculate rating stars
-  const fullStars = Math.floor(city.overallRating);
-  const hasHalfStar = city.overallRating % 1 >= 0.5;
-
-  // Calculate progress bar width (out of 5)
-  const getProgressWidth = (rating: number) => `${(rating / 5) * 100}%`;
-
-  // Color for rating bars
-  const getRatingColor = (rating: number) => {
-    if (rating >= 4) return "bg-success";
-    if (rating >= 3) return "bg-accent";
-    return "bg-error";
-  };
-
   return (
     <div className="card-skeu overflow-hidden group">
       {/* City Image */}
@@ -34,67 +52,60 @@ export function CityCard({ city }: CityCardProps) {
 
       {/* Card Content */}
       <div className="p-5 space-y-4">
-        {/* City Name and Rating */}
+        {/* City Name and Like/Dislike Buttons */}
         <div className="space-y-2">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 text-muted text-sm mb-1">
-                <MapPin className="w-4 h-4" />
-                <span>{city.region}</span>
-              </div>
-              <h3 className="text-xl font-bold text-foreground">{city.name}</h3>
-            </div>
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-xl font-bold text-foreground flex-1">{city.name}</h3>
+            <LikeDislikeButton
+              cityId={city.id}
+              initialLikes={city.likes}
+              initialDislikes={city.dislikes}
+              compact
+            />
           </div>
-
-          {/* Stars and Reviews */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              {[...Array(fullStars)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-4 h-4 fill-accent text-accent"
-                />
-              ))}
-              {hasHalfStar && (
-                <Star className="w-4 h-4 fill-accent/50 text-accent" />
-              )}
-              {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-                <Star
-                  key={`empty-${i}`}
-                  className="w-4 h-4 text-gray-300"
-                />
-              ))}
-            </div>
-            <span className="text-sm font-semibold text-foreground">
-              {city.overallRating.toFixed(1)}
-            </span>
-            <span className="text-sm text-muted">({city.reviewCount})</span>
+          {/* Region */}
+          <div className="flex items-center gap-2 text-muted text-sm">
+            <MapPin className="w-4 h-4" />
+            <span>{city.region}</span>
           </div>
         </div>
 
-        {/* Rating Bars */}
-        <div className="space-y-2">
-          {[
-            { label: "☕ 카페", rating: city.cafeRating },
-            { label: "💰 생활비", rating: city.costRating },
-            { label: "📶 인터넷", rating: city.internetRating },
-            { label: "🏠 주거비", rating: city.housingRating },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-3">
-              <span className="text-sm text-muted w-16 flex-shrink-0">
-                {item.label}
-              </span>
-              <div className="flex-1 progress-bar-skeu h-2 relative">
-                <div
-                  className={`progress-fill-skeu h-full absolute left-0 top-0 ${getRatingColor(item.rating)}`}
-                  style={{ width: getProgressWidth(item.rating) }}
-                ></div>
-              </div>
-              <span className="text-xs font-semibold text-foreground w-8 text-right">
-                {item.rating.toFixed(1)}
-              </span>
+        {/* Filter Information Section */}
+        <div className="space-y-3 pt-2 border-t border-border">
+          {/* Budget */}
+          <div className="flex items-center gap-2">
+            <Wallet className="w-4 h-4 text-muted" />
+            <span className="text-sm text-muted">예산:</span>
+            <span className="text-sm font-semibold text-foreground">{city.budget}</span>
+          </div>
+
+          {/* Region (already shown above, can skip or show differently) */}
+
+          {/* Environment Tags */}
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-1 text-muted mt-0.5">
+              <Building2 className="w-4 h-4" />
+              <span className="text-sm">환경:</span>
             </div>
-          ))}
+            <div className="flex flex-wrap gap-2">
+              {city.environment.map((env) => (
+                <span
+                  key={env}
+                  className="tag-skeu text-xs flex items-center gap-1"
+                >
+                  {getEnvironmentIcon(env)}
+                  {env}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Best Season */}
+          <div className="flex items-center gap-2">
+            {getSeasonIcon(city.bestSeason)}
+            <span className="text-sm text-muted">최고계절:</span>
+            <span className="text-sm font-semibold text-foreground">{city.bestSeason}</span>
+          </div>
         </div>
 
         {/* Monthly Cost */}
@@ -131,18 +142,6 @@ export function CityCard({ city }: CityCardProps) {
               #{tag}
             </span>
           ))}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <Link href={`/cities/${city.slug}`} className="flex-1">
-            <button className="w-full input-skeu px-4 py-2 rounded-lg text-sm font-semibold text-foreground hover:shadow-lg transition-all">
-              상세보기
-            </button>
-          </Link>
-          <button className="flex-1 btn-skeu px-4 py-2 rounded-lg text-sm font-semibold text-white">
-            평가하기
-          </button>
         </div>
       </div>
     </div>

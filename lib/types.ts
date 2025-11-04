@@ -1,22 +1,26 @@
+// Filter Types
+export type BudgetFilter = "100만원 이하" | "100~200만원" | "200만원 이상";
+export type RegionFilter = "수도권" | "경상도" | "전라도" | "강원도" | "제주도" | "충청도";
+export type EnvironmentFilter = "자연친화" | "도시선호" | "카페작업" | "코워킹 필수";
+export type SeasonFilter = "봄" | "여름" | "가을" | "겨울";
+
 // City (도시)
 export interface City {
   id: string;
   name: string; // "서울 성수동"
-  region: string; // "서울/경기"
   slug: string; // "seoul-seongsu"
   imageUrl: string;
   description: string;
 
-  // 점수
-  overallRating: number; // 4.8
-  cafeRating: number; // 5.0
-  costRating: number; // 2.5
-  internetRating: number; // 5.0
-  housingRating: number; // 2.8
+  // 좋아요/싫어요
+  likes: number;
+  dislikes: number;
 
-  // 통계
-  reviewCount: number; // 327
-  likeCount: number;
+  // 필터 정보
+  budget: BudgetFilter;
+  region: RegionFilter;
+  environment: EnvironmentFilter[];
+  bestSeason: SeasonFilter;
 
   // 생활비
   monthlyCost: number; // 1850000 (원)
@@ -43,37 +47,9 @@ export interface Review {
   userId: string;
   userName: string;
   cityName: string;
-
-  rating: number; // 1-5
-  content: string; // 리뷰 내용
+  rating: number;
+  content: string;
   tags: string[];
-
-  // 메타
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Meetup (밋업)
-export interface Meetup {
-  id: string;
-  cityId: string;
-  cityName: string;
-  hostId: string;
-
-  title: string;
-  description: string;
-  location: string; // "@ 대림창고"
-  address: string;
-
-  dateTime: Date;
-  status: "confirmed" | "pending";
-
-  // 참석자
-  rsvpCount: number;
-  rsvpUsers: string[]; // userId[]
-  rsvpUserImages: string[]; // user profile images
-
-  // 메타
   createdAt: Date;
   updatedAt: Date;
 }

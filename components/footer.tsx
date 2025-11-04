@@ -69,7 +69,7 @@ export function Footer() {
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    {link.external ? (
+                    {'external' in link && link.external ? (
                       <a
                         href={link.href}
                         target="_blank"
