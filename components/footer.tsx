@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 export function Footer() {
-  const footerSections = [
+  const footerSections: Array<{
+    title: string;
+    links: Array<{ label: string; href: string; external?: boolean }>;
+  }> = [
     {
       title: "서비스",
       links: [

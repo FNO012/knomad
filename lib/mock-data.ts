@@ -245,3 +245,43 @@ export const mockCities: City[] = [
     updatedAt: new Date("2024-11-03"),
   },
 ];
+
+// Mock Reviews Data
+export const mockReviews: Review[] = [
+  {
+    id: "1",
+    cityId: "1",
+    userId: "user1",
+    userName: "김디지털",
+    cityName: "서울 성수동",
+    rating: 5.0,
+    content: "카페가 정말 많고 분위기도 좋아요. 콘센트 걱정 없고 와이파이도 빠릅니다.",
+    tags: ["카페천국", "콘센트많음", "와이파이빠름"],
+    createdAt: new Date("2024-11-03T14:30:00"),
+    updatedAt: new Date("2024-11-03T14:30:00"),
+  },
+  {
+    id: "2",
+    cityId: "2",
+    userId: "user2",
+    userName: "박노마드",
+    cityName: "제주 제주시",
+    rating: 4.5,
+    content: "자연이 아름답고 여유로운 분위기가 좋아요. 다만 생활비가 생각보다 높네요.",
+    tags: ["자연", "힐링", "조용함"],
+    createdAt: new Date("2024-11-03T10:15:00"),
+    updatedAt: new Date("2024-11-03T10:15:00"),
+  },
+  {
+    id: "3",
+    cityId: "3",
+    userId: "user3",
+    userName: "이프리랜서",
+    cityName: "부산 해운대",
+    rating: 4.8,
+    content: "바다 보면서 일할 수 있는 카페들이 많아요. 날씨도 좋고 사람들도 친절합니다!",
+    tags: ["바다뷰", "날씨좋음", "친절"],
+    createdAt: new Date("2024-11-02T16:45:00"),
+    updatedAt: new Date("2024-11-02T16:45:00"),
+  },
+];
