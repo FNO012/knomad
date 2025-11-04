@@ -235,3 +235,46 @@ export const mockReviews: Review[] = [
     updatedAt: new Date("2024-11-02T16:45:00"),
   },
 ];
+
+// Helper Functions
+
+/**
+ * Get a city by slug
+ * @param slug - City slug (e.g., "seoul-seongsu")
+ * @returns City object or undefined if not found
+ */
+export function getCityBySlug(slug: string): City | undefined {
+  return mockCities.find((city) => city.slug === slug);
+}
+
+/**
+ * Get related cities based on region or overall rating
+ * @param currentCityId - Current city ID to exclude
+ * @param limit - Number of cities to return (default: 3)
+ * @returns Array of related cities
+ */
+export function getRelatedCities(currentCityId: string, limit: number = 3): City[] {
+  const currentCity = mockCities.find((city) => city.id === currentCityId);
+
+  if (!currentCity) {
+    return mockCities.slice(0, limit);
+  }
+
+  // Filter out current city and sort by same region first, then by rating
+  const relatedCities = mockCities
+    .filter((city) => city.id !== currentCityId)
+    .sort((a, b) => {
+      // Prioritize same region
+      const aIsSameRegion = a.region === currentCity.region ? 1 : 0;
+      const bIsSameRegion = b.region === currentCity.region ? 1 : 0;
+
+      if (aIsSameRegion !== bIsSameRegion) {
+        return bIsSameRegion - aIsSameRegion;
+      }
+
+      // Then sort by overall rating
+      return b.overallRating - a.overallRating;
+    });
+
+  return relatedCities.slice(0, limit);
+}
