@@ -7,12 +7,14 @@ interface LikeDislikeButtonProps {
   cityId: string;
   initialLikes: number;
   initialDislikes: number;
+  compact?: boolean;
 }
 
 export function LikeDislikeButton({
   cityId,
   initialLikes,
   initialDislikes,
+  compact = false,
 }: LikeDislikeButtonProps) {
   const [likes, setLikes] = useState(initialLikes);
   const [dislikes, setDislikes] = useState(initialDislikes);
