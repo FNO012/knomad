@@ -52,16 +52,21 @@ export function CityCard({ city }: CityCardProps) {
 
       {/* Card Content */}
       <div className="p-5 space-y-4">
-        {/* City Name and Region */}
+        {/* City Name and Like/Dislike Buttons */}
         <div className="space-y-2">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 text-muted text-sm mb-1">
-                <MapPin className="w-4 h-4" />
-                <span>{city.region}</span>
-              </div>
-              <h3 className="text-xl font-bold text-foreground">{city.name}</h3>
-            </div>
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-xl font-bold text-foreground flex-1">{city.name}</h3>
+            <LikeDislikeButton
+              cityId={city.id}
+              initialLikes={city.likes}
+              initialDislikes={city.dislikes}
+              compact
+            />
+          </div>
+          {/* Region */}
+          <div className="flex items-center gap-2 text-muted text-sm">
+            <MapPin className="w-4 h-4" />
+            <span>{city.region}</span>
           </div>
         </div>
 
@@ -138,13 +143,6 @@ export function CityCard({ city }: CityCardProps) {
             </span>
           ))}
         </div>
-
-        {/* Like/Dislike Buttons */}
-        <LikeDislikeButton
-          cityId={city.id}
-          initialLikes={city.likes}
-          initialDislikes={city.dislikes}
-        />
       </div>
     </div>
   );

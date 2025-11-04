@@ -69,8 +69,8 @@ export function FilterBar({ onFilterChange }: FilterBarProps) {
         />
       </div>
 
-      {/* Filters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Filters - Vertical Stack */}
+      <div className="space-y-4">
         {/* Budget Filter */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-foreground">예산</label>
@@ -118,18 +118,6 @@ export function FilterBar({ onFilterChange }: FilterBarProps) {
             ))}
           </select>
         </div>
-
-        {/* Reset Button */}
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-foreground invisible">리셋</label>
-          <button
-            onClick={handleReset}
-            className="btn-skeu w-full px-4 py-2 rounded-lg text-white font-semibold flex items-center justify-center gap-2"
-          >
-            <X className="w-4 h-4" />
-            초기화
-          </button>
-        </div>
       </div>
 
       {/* Environment Filter - Checkboxes */}
@@ -151,6 +139,17 @@ export function FilterBar({ onFilterChange }: FilterBarProps) {
             </label>
           ))}
         </div>
+      </div>
+
+      {/* Reset Button */}
+      <div className="pt-2">
+        <button
+          onClick={handleReset}
+          className="btn-skeu w-full px-4 py-2 rounded-lg text-white font-semibold flex items-center justify-center gap-2"
+        >
+          <X className="w-4 h-4" />
+          초기화
+        </button>
       </div>
     </div>
   );
