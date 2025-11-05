@@ -6,9 +6,13 @@ interface CityDetailHeroProps {
 }
 
 export function CityDetailHero({ city }: CityDetailHeroProps) {
-  // Calculate rating stars
-  const fullStars = Math.floor(city.overallRating);
-  const hasHalfStar = city.overallRating % 1 >= 0.5;
+  // Calculate rating based on likes/dislikes ratio (0-5 scale)
+  const totalVotes = city.likes + city.dislikes;
+  const likeRatio = totalVotes > 0 ? city.likes / totalVotes : 0;
+  const overallRating = likeRatio * 5; // Convert to 0-5 scale
+
+  const fullStars = Math.floor(overallRating);
+  const hasHalfStar = overallRating % 1 >= 0.5;
 
   return (
     <section className="relative bg-white">
@@ -54,7 +58,7 @@ export function CityDetailHero({ city }: CityDetailHeroProps) {
                 ))}
               </div>
               <span className="text-2xl font-semibold text-foreground">
-                {city.overallRating.toFixed(1)}
+                {overallRating.toFixed(1)}
               </span>
             </div>
 
@@ -78,19 +82,6 @@ export function CityDetailHero({ city }: CityDetailHeroProps) {
 
           {/* Right: Stats */}
           <div className="space-y-4">
-            {/* Reviews Count */}
-            <div className="card-skeu p-6 space-y-2">
-              <div className="flex items-center gap-3">
-                <MessageSquare className="w-6 h-6 text-primary" />
-                <div>
-                  <p className="text-sm text-muted">리뷰</p>
-                  <p className="text-2xl font-bold text-foreground">
-                    {city.reviewCount.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </div>
-
             {/* Likes Count */}
             <div className="card-skeu p-6 space-y-2">
               <div className="flex items-center gap-3">
@@ -98,7 +89,7 @@ export function CityDetailHero({ city }: CityDetailHeroProps) {
                 <div>
                   <p className="text-sm text-muted">좋아요</p>
                   <p className="text-2xl font-bold text-foreground">
-                    {city.likeCount.toLocaleString()}
+                    {city.likes.toLocaleString()}
                   </p>
                 </div>
               </div>

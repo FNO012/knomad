@@ -1,12 +1,12 @@
-import { getRelatedCities } from "@/lib/mock-data";
+import { getRelatedCities } from "@/lib/supabase/queries";
 import { CityCard } from "@/components/city-card";
 
 interface RelatedCitiesProps {
   currentCityId: string;
 }
 
-export function RelatedCities({ currentCityId }: RelatedCitiesProps) {
-  const relatedCities = getRelatedCities(currentCityId, 3);
+export async function RelatedCities({ currentCityId }: RelatedCitiesProps) {
+  const relatedCities = await getRelatedCities(currentCityId, 3);
 
   if (relatedCities.length === 0) {
     return null;

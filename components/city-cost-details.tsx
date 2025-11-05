@@ -67,34 +67,22 @@ export function CityCostDetails({ city }: CityCostDetailsProps) {
           </div>
         </div>
 
-        {/* Cost Rating Bar */}
+        {/* Cost Summary */}
         <div className="mt-8 card-skeu p-6">
           <div className="flex items-center justify-between mb-3">
             <span className="text-lg font-semibold text-foreground">
               생활비 평가
             </span>
-            <span className="text-2xl font-bold text-primary">
-              {city.costRating.toFixed(1)} / 5.0
+            <span className="text-xl font-bold text-primary">
+              {city.budget}
             </span>
           </div>
-          <div className="progress-bar-skeu h-4 relative">
-            <div
-              className={`progress-fill-skeu h-full absolute left-0 top-0 ${
-                city.costRating >= 4
-                  ? "bg-success"
-                  : city.costRating >= 3
-                  ? "bg-accent"
-                  : "bg-error"
-              }`}
-              style={{ width: `${(city.costRating / 5) * 100}%` }}
-            ></div>
-          </div>
-          <p className="text-sm text-muted mt-3">
-            {city.costRating >= 4
+          <p className="text-sm text-muted">
+            {city.budget === "100만원 이하"
               ? "✅ 생활비가 저렴한 편입니다"
-              : city.costRating >= 3
+              : city.budget === "100~200만원"
               ? "⚠️ 생활비가 보통 수준입니다"
-              : "❌ 생활비가 비싼 편입니다"}
+              : "💰 프리미엄 생활 환경입니다"}
           </p>
         </div>
       </div>

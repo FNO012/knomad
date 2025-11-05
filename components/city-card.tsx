@@ -62,6 +62,12 @@ export function CityCard({ city }: CityCardProps) {
               </div>
               <h3 className="text-xl font-bold text-foreground">{city.name}</h3>
             </div>
+            {/* Like/Dislike Buttons - moved to top right */}
+            <LikeDislikeButton
+              cityId={city.id}
+              initialLikes={city.likes}
+              initialDislikes={city.dislikes}
+            />
           </div>
         </div>
 
@@ -112,39 +118,6 @@ export function CityCard({ city }: CityCardProps) {
             </span>
           </div>
         </div>
-
-        {/* Weather and Air Quality */}
-        <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1 text-muted">
-            <Cloud className="w-4 h-4" />
-            <span>{city.currentTemp}°C</span>
-            <span>{city.currentWeather}</span>
-          </div>
-          <div className="flex items-center gap-1 text-muted">
-            <Wind className="w-4 h-4" />
-            <span>AQI: {city.currentAQI}</span>
-            <span className="text-success">(좋음)</span>
-          </div>
-        </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {city.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="tag-skeu text-xs"
-            >
-              #{tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Like/Dislike Buttons */}
-        <LikeDislikeButton
-          cityId={city.id}
-          initialLikes={city.likes}
-          initialDislikes={city.dislikes}
-        />
       </div>
     </div>
   );

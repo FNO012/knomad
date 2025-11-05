@@ -3,9 +3,13 @@
 import { useState, useMemo } from "react";
 import { CityCardsSection } from "./city-cards-section";
 import { FilterBar, FilterState } from "./filter-bar";
-import { mockCities } from "@/lib/mock-data";
+import type { City } from "@/lib/types";
 
-export function CityListWithFilters() {
+interface CityListWithFiltersProps {
+  cities: City[];
+}
+
+export function CityListWithFilters({ cities }: CityListWithFiltersProps) {
   const [filters, setFilters] = useState<FilterState>({
     search: "",
     budget: "전체",
@@ -16,7 +20,7 @@ export function CityListWithFilters() {
 
   // Filter and sort cities
   const filteredCities = useMemo(() => {
-    let result = [...mockCities];
+    let result = [...cities];
 
     // Apply search filter
     if (filters.search) {
@@ -54,7 +58,7 @@ export function CityListWithFilters() {
     result.sort((a, b) => b.likes - a.likes);
 
     return result;
-  }, [filters]);
+  }, [filters, cities]);
 
   return (
     <>

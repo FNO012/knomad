@@ -6,12 +6,21 @@ import { CityCostDetails } from "@/components/city-cost-details";
 import { CityWeatherInfo } from "@/components/city-weather-info";
 import { CityEnvironmentInfo } from "@/components/city-environment-info";
 import { RelatedCities } from "@/components/related-cities";
-import { mockCities } from "@/lib/mock-data";
+import { getCityBySlug } from "@/lib/supabase/queries";
+import { createPublicClient } from "@/lib/supabase/client-public";
 import { notFound } from "next/navigation";
 
 // Generate static paths for all cities
 export async function generateStaticParams() {
-  return mockCities.map((city) => ({
+  const supabase = createPublicClient();
+  const { data: cities } = await supabase
+    .from("cities")
+    .select("slug")
+    .order("created_at");
+
+  if (!cities) return [];
+
+  return cities.map((city) => ({
     slug: city.slug,
   }));
 }
@@ -25,8 +34,8 @@ export default async function CityDetailPage({
   // Await params in Next.js 15
   const { slug } = await params;
 
-  // Find city by slug
-  const city = mockCities.find((c) => c.slug === slug);
+  // Find city by slug from Supabase
+  const city = await getCityBySlug(slug);
 
   // If city not found, show 404
   if (!city) {
